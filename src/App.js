@@ -9,6 +9,7 @@ import Addcat from './pages/Addcat';
 import Add_subcat from './pages/Add_subcat';
 import Product from './pages/Product';
 import Add_product from './pages/Add_product';
+import Orders from './pages/Orders';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/add_sub_category' element={<Add_subcat/>}></Route>
           <Route path='/product_managment' element={<Product/>}></Route>
           <Route path='/addproduct' element={<Add_product/>}></Route>
+          <Route path='/orderlist' element={<Orders/>}></Route>
         </Routes>
       </Router>
     </div>

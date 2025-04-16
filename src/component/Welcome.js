@@ -111,6 +111,10 @@ function Welcome() {
     {
       navigate('/product_managment')
     }
+    if(route=='/order-list')
+    {
+      navigate('/orderlist')
+    }
   };
 
   const cardData = [
@@ -118,7 +122,7 @@ function Welcome() {
     { title: 'Category Managment', icon: <Category fontSize="large" />, color: '#3188d4', route: '/cat-mgmt' },
     { title: 'Subcategories', icon: <Subscriptions fontSize="large" />, color: '#e21680', route: '/sub-cat' },
     { title: 'Product Managment', icon: <Inventory fontSize="large" />, color: '#34a853', route: '/product-mgmt' },
-    { title: 'Order Managment', icon: <ShoppingCart fontSize="large" />, color: '#e6df5e', route: '/user-list' },
+    { title: 'Order Managment', icon: <ShoppingCart fontSize="large" />, color: '#e6df5e', route: '/order-list' },
     { title: 'Customer Support', icon: <SupportAgent fontSize="large" />, color: '#4285f4', route: '/property-list' },
     { title: 'Reviews & Feedback', icon: <Feedback fontSize="large" />, color: '#f16ab0  ', route: '/transactions' },
     { title: 'Payment Transactions', icon: <Payment fontSize="large" />, color: '#7ad431 ', route: '/sold-property' }
@@ -170,7 +174,7 @@ function Welcome() {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Userlist', 'Categories', 'Sub categories', 'Products'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -183,7 +187,7 @@ function Welcome() {
         </List>
         <Divider />
         <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
+          {['Orders', 'Reviews', 'Payment'].map((text, index) => (
             <ListItem key={text} disablePadding>
               <ListItemButton>
                 <ListItemIcon>

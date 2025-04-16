@@ -44,6 +44,11 @@ function Product() {
       console.error('Error fetching category data:', error);
     })
   },[]);
+
+  const deleteproduct = (pid) =>{
+    console.log("id of deleting product",pid);
+    
+  }
   
 return (
   <div style={{margin:'20px'}}> 
@@ -51,7 +56,7 @@ return (
   <Button variant="contained" 
   sx={{backgroundColor:"black",display:"flex",padding:"10px 80px",alignItems: 'center'}}
   onClick={()=>navigate('/addproduct')}>
-    Add Category
+    Add Product
   </Button>
   </div>
     <TableContainer component={Paper}>
@@ -66,6 +71,7 @@ return (
           <StyledTableCell align="center">Material</StyledTableCell>
           <StyledTableCell align="center">Subcategory Name</StyledTableCell>
           <StyledTableCell align="center">Category Name</StyledTableCell>
+          <StyledTableCell align="center">Delete Product</StyledTableCell>
         </TableRow>
       </TableHead>
       <TableBody>
@@ -86,6 +92,7 @@ return (
             <StyledTableCell align="center">{item.material}</StyledTableCell>
             <StyledTableCell align="center">{item.subcategory_name}</StyledTableCell>            
             <StyledTableCell align="center">{item.category_name}</StyledTableCell>
+            <StyledTableCell align="center"><Button onClick={()=>deleteproduct(item._id)}>Delete</Button></StyledTableCell>
           </StyledTableRow>
         ))}
       </TableBody>

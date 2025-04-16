@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box, Container, Grid, Typography, Card, CardContent,
     FormControl, FormLabel, TextField, Button, Stack, OutlinedInput,
@@ -16,17 +16,16 @@ function Add_product() {
     const [subcategoryId, setSubcategoryId] = useState('')
     const [filtersubdata, setFilterSubdata] = useState([])
     const [picture, setPicture] = useState([])
-    const [color, setColor] = useState([])
+    const [color, setColor] = useState('')
     const [material, setMaterial] = useState('')
     const [price, setPrice] = useState('')
-    const [desc,setDesc] = useState('')
+    const [desc, setDesc] = useState('')
 
     useEffect(() => {
         var fetchcategories = async () => {
             try {
                 var respose = await axios.get('http://localhost:3000/admin/dispcategory')
                 console.log("CAT = ", respose.data.data);
-
                 if (respose.data.data) {
                     setCategories(respose.data.data)
                 }
@@ -43,9 +42,8 @@ function Add_product() {
             try {
                 const response = await axios.get('http://localhost:3000/admin/dispsubcat');
                 console.log("SUB-CAT == ", response.data.data);
-
                 if (response.data.data) {
-                    setSubcategories(response.data.data); 
+                    setSubcategories(response.data.data);
                 }
             } catch (error) {
                 console.log("Error in fetching subcategories", error);
@@ -56,17 +54,11 @@ function Add_product() {
 
     useEffect(() => {
         if (categoryID) {
-            console.log("Cat ID = " + categoryID);
-            console.log("Subcategories = ", subcategories);
-
             const data = subcategories.filter(item => item.category_id._id === categoryID);
-
-            console.log("Filtered Data = ", data);
             setFilterSubdata(data);
         } else {
             setFilterSubdata([]);
         }
-
         setSubcategoryId('');
     }, [categoryID, subcategories]);
 
@@ -82,7 +74,7 @@ function Add_product() {
         formdata.append('material', material)
         formdata.append('color', color)
         formdata.append('price', price)
-        formdata.append('description',desc)
+        formdata.append('description', desc)
 
         for (var i = 0; i < picture.length; i++) {
             formdata.append('picture', picture[i])
@@ -105,18 +97,13 @@ function Add_product() {
         }
     }
 
-
     return (
         <div>
             <Box>
-                <Container maxWidth="sm">
+                <Container maxWidth="md">
                     <Grid container justifyContent="center" padding="50px 0px">
-                        <Grid item sm={8} xs={12}>
-                            <Box textAlign="center" paddingBottom="18px">
-                                <Typography variant="h6" fontWeight={500} fontSize={'20px'}>
-                                    Add Product
-                                </Typography>
-                            </Box>
+                        <Grid item xs={12}>
+                            
                             <Card sx={{ boxShadow: "0px 0px 8px rgba(0,0,0,0.3)" }}>
                                 <CardContent sx={{ padding: "30px 20px" }}>
                                     <Typography variant="h5" fontWeight={400} textAlign="center">
@@ -126,15 +113,14 @@ function Add_product() {
                                         Fill in the details below to add a new Product
                                     </Typography>
                                     <Stack spacing={2}>
-
+                                        
                                         {/* Select Category Dropdown */}
                                         <FormControl fullWidth>
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Select Category</FormLabel>
+                                            {/* <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Select Category</FormLabel> */}
                                             <Select
                                                 value={categoryID}
                                                 onChange={(e) => {
                                                     setCategoryId(e.target.value);
-                                                    console.log("Selected category ID = " + e.target.value);
                                                 }}
                                                 displayEmpty
                                                 size="small"
@@ -150,12 +136,11 @@ function Add_product() {
 
                                         {/* Select Sub-Category Dropdown */}
                                         <FormControl fullWidth>
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Select Sub-Category</FormLabel>
+                                            {/* <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Select Sub-Category</FormLabel> */}
                                             <Select
                                                 value={subcategoryId}
                                                 onChange={(e) => {
                                                     setSubcategoryId(e.target.value);
-                                                    console.log("Selected sub-category ID = " + e.target.value);
                                                 }}
                                                 displayEmpty
                                                 size="small"
@@ -168,8 +153,8 @@ function Add_product() {
                                                 ))}
                                             </Select>
                                         </FormControl>
-                                        
-                                        {/*  Product*/}
+
+                                        {/* Product Name */}
                                         <FormControl fullWidth>
                                             <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Product Name</FormLabel>
                                             <TextField
@@ -189,7 +174,7 @@ function Add_product() {
                                                 inputProps={{
                                                     multiple: true,
                                                     accept: "image/*"
-                                                }} // Allow multiple image selection
+                                                }}
                                                 size="large"
                                                 onChange={handleFileChange}
                                                 endAdornment={
@@ -202,48 +187,58 @@ function Add_product() {
                                             />
                                         </FormControl>
 
-                                          {/*  color*/}
-                                          <FormControl >
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Color</FormLabel>
-                                            <TextField
-                                                type="text"
-                                                size="small"
-                                                value={color}
-                                                onChange={(e) => setColor(e.target.value)}
-                                            />
-                                        </FormControl>
-                                          {/*  material*/}
-                                          <FormControl >
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Material</FormLabel>
-                                            <TextField
-                                                type="text"
-                                                size="small"
-                                                value={material}
-                                                onChange={(e) => setMaterial(e.target.value)}
-                                            />
-                                        </FormControl>
+                                        {/* Color & Material in one row */}
+                                        <Grid container spacing={1}>
+                                            <Grid item xs={12} sm={6} sx={{paddingLeft:0}}>
+                                                <FormControl fullWidth>
+                                                    <FormLabel  sx={{ color: "#000", marginBottom: "8px"}}>Color</FormLabel>
+                                                    <TextField   
+                                                        sx={{paddingLeft:"0px"}}                                             
+                                                        type="text"
+                                                        size="small"
+                                                        value={color}
+                                                        onChange={(e) => setColor(e.target.value)}
+                                                    />                                                
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <FormControl fullWidth>
+                                                    <FormLabel  sx={{ color: "#000", marginBottom: "8px" }}>Material</FormLabel>
+                                                    <TextField
+                                                        type="text"
+                                                        size="small"
+                                                        value={material}
+                                                        onChange={(e) => setMaterial(e.target.value)}
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
 
-                                          {/*  price*/}
-                                          <FormControl fullWidth>
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Price</FormLabel>
-                                            <TextField
-                                                type="text"
-                                                size="small"
-                                                value={price}
-                                                onChange={(e) => setPrice(e.target.value)}
-                                            />
-                                        </FormControl>
-
-                                          {/*  description*/}
-                                          <FormControl fullWidth>
-                                            <FormLabel sx={{ color: "#000", marginBottom: "8px" }}>Description</FormLabel>
-                                            <TextField
-                                                type="text"
-                                                size="small"
-                                                value={desc}
-                                                onChange={(e) => setDesc(e.target.value)}
-                                            />
-                                        </FormControl>
+                                        {/* Price & Description in one row */}
+                                        <Grid container spacing={1}>
+                                            <Grid item xs={12} sm={6}>
+                                                <FormControl fullWidth>
+                                                    <FormLabel  sx={{ color: "#000", marginBottom: "8px" }}>Price</FormLabel>
+                                                    <TextField
+                                                        type="text"
+                                                        size="small"
+                                                        value={price}
+                                                        onChange={(e) => setPrice(e.target.value)}
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <FormControl fullWidth>
+                                                    <FormLabel  sx={{ color: "#000", marginBottom: "8px" }}>Description</FormLabel>
+                                                    <TextField
+                                                        type="text"
+                                                        size="small"
+                                                        value={desc}
+                                                        onChange={(e) => setDesc(e.target.value)}
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
 
                                         {/* Submit Button */}
                                         <Button
@@ -264,4 +259,4 @@ function Add_product() {
     )
 }
 
-export default Add_product
+export default Add_product;

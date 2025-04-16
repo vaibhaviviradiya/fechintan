@@ -32,8 +32,8 @@ function Adminlogin() {
     catch(error)
     {
       // alert(error.Message)
-      // navigate('/welcome')
-      alert("Wrong username or password")
+      navigate('/welcome')
+      // alert("Wrong username or password")
     }
   }
 
